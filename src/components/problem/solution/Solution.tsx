@@ -21,9 +21,15 @@ const Solution = ({solution}:SolutionState) => {
   
   const updateContent = (content: string) => {
     return content.replace(
-      /\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else|true|false)\b|\d+|[><[\]{}()]/g,
+      /\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else|true|false)\b|\d+|[><[\]{}()]|\/\*[\s\S]*?\*\/|\/\/.*/g,
       (match) => {
-        if (/\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else)\b/.test(match)) {
+        if (/\/\*[\s\S]*?\*\//.test(match)) {
+          // Multi-line comments in light gray
+          return `<span style="color: #808080;">${match}</span>`;
+        } else if (/^\/\/.*/.test(match)) {
+          // Single-line comments in light gray
+          return `<span style="color: #808080;">${match}</span>`;
+        } else if (/\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else)\b/.test(match)) {
           // Java keywords and specific words in green
           return `<span style="color: #4ec9b0;">${match}</span>`;
         } else if (/\b(true|false)\b/.test(match)) {
