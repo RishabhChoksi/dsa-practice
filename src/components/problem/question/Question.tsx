@@ -9,6 +9,7 @@ const StyledQuestion = styled('section')`
 padding: 1rem;
 background-color: #262626;
 color: #e1e1e1;
+white-space: pre-wrap;
 `
 const StyledHeadingWrapper = styled('div')`
   margin-top: 0.3rem;

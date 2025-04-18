@@ -1,4 +1,5 @@
-[{
+[
+  {
   "problem": {
     "id": 0,
     "topic": "Arrays",
@@ -44,4 +45,47 @@
   },
   "solution": {
 "solution": "class Solution {\n    public int maxSubArray(int[] nums) {\n\n        /*\n        Solution: 1\n        Simply iterate over the nums array and maintain a currentSum and maxsum\n        If current sum is becoming negative, update it to zero to avoid negative\n        contribution to the sum\n        */\n\n        int ans = nums[0], currentSum = nums[0];\n\n        for (int i = 1; i < nums.length; i++) {\n            // Never lets it become negative\n            currentSum = Math.max(currentSum, 0);\n            currentSum += nums[i];\n            ans = Math.max(currentSum, ans);\n        }\n\n        return ans;\n\n    }\n}"  }
-}]
+},
+
+{
+  "problem": {
+    "id": 1,
+    "topic": "Arrays",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/",
+    "tags": [
+      "arrays","dynamic programming"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Best Time to Buy and Sell Stock",
+    "question": "You are given an array prices where prices[i] is the price of a given stock on the ith day.\n\nYou want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.\n\nReturn the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.",
+    "headingImages": [
+       ],
+    "examples": [
+      {
+        "id": 0,
+        "input": "prices = [7,1,5,3,6,4]",
+        "output": "5",
+        "explanation": "Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.\n Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell."
+      },
+      {
+        "id": 1,
+        "input": "prices = [7,6,4,3,1]",
+        "output": "0",
+        "explanation": "In this case, no transactions are done and the max profit = 0."
+      }
+    ],
+    "constraints": [
+      "1 <= prices.length <= 10^5",
+      "0 <= nums[i] <= 10^4"
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public int maxProfit(int[] prices) {\n        /*\n        Solution 1:\n        The idea is to start from day 1 and maintain a previous minimum\n        and keep subtracting it current item ans store max profit\n        */\n        int min = prices[0], ans = 0;\n        for (int i = 1; i < prices.length; i++) {\n            int maxProfit = prices[i] - min;\n            //Only if maxProfit is greater than 0, update it,else default it to 0\n            if (maxProfit > 0) {\n                ans = Math.max(ans, maxProfit);\n            }\n            min = Math.min(min, prices[i]);\n        }\n        return ans;\n    }\n}"
+  }
+}
+]
