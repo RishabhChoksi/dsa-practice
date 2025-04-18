@@ -1,7 +1,7 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { RootStateType } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { IndividualProblemState, markStarred, markVisited } from '../../store/app-slice';
+import { IndividualProblemState } from '../../store/app-slice';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { flexRender, useReactTable } from '@tanstack/react-table';
@@ -63,8 +63,32 @@ const ProblemsList = () => {
   const dispatch = useDispatch();
   const problemsList: IndividualProblemState[] = useSelector((state: RootStateType) => state.app);
   const navigate = useNavigate();
-  const starredItems: number[] = JSON.parse(localStorage.getItem('starred') || '[]') as number[];
-  const visitedItems: number[] = JSON.parse(localStorage.getItem('visited') || '[]') as number[];
+
+  const [starredItems, setStarredItems] = useState<number[]>(() =>
+    JSON.parse(localStorage.getItem('starred') || '[]')
+  );
+  const [visitedItems, setVisitedItems] = useState<number[]>(() =>
+    JSON.parse(localStorage.getItem('visited') || '[]')
+  );
+
+  const handleStarClick = (id: number) => {
+    const updatedStarredItems = starredItems.includes(id)
+      ? starredItems.filter((item) => item !== id) // Remove if already starred
+      : [...starredItems, id]; // Add if not starred
+
+    setStarredItems(updatedStarredItems); // Update state
+    localStorage.setItem('starred', JSON.stringify(updatedStarredItems)); // Update localStorage
+  };
+
+  const handleVisitedClick = (id: number) => {
+    const updatedVisitedItems = visitedItems.includes(id)
+      ? visitedItems.filter((item) => item !== id) // Remove if already visited
+      : [...visitedItems, id]; // Add if not visited
+
+    setVisitedItems(updatedVisitedItems); // Update state
+    localStorage.setItem('visited', JSON.stringify(updatedVisitedItems)); // Update localStorage
+  };
+  
 
   const columns = useMemo<ColumnDef<IndividualProblemState>[]>(
     () => [
@@ -126,7 +150,7 @@ const ProblemsList = () => {
               }}
               onClick={(e) => {
                 e.stopPropagation(); // Prevent triggering the row's onClick
-                dispatch(markStarred(row.original.problem.id)); // Dispatch the markStarred action
+                handleStarClick(row.original.problem.id); 
               }}
             >
               {starred ? '★' : '☆'}
@@ -178,7 +202,7 @@ const ProblemsList = () => {
             <tr
               key={row.id}
               onClick={() => {
-               dispatch(markVisited(row.original.problem.id))
+                handleVisitedClick(row.original.problem.id);
                 navigate(`/dsa-practice/problems/${row.original.problem.id}`)
               }}
             >
