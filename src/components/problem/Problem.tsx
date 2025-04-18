@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootStateType } from '../../store/store';
 import { IndividualProblemState } from '../../store/app-slice';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 const StyledProblem = styled('div')`
     width: 100vw;
@@ -13,7 +14,6 @@ const StyledProblem = styled('div')`
     flex-direction: row;
     justify-content: start;
     padding: 0.4rem 0.5rem; 
-    background-color: rgb(52, 51, 51);
 
 `
 
@@ -27,7 +27,9 @@ export interface ProblemState {
 }
 
 const Problem = () => {
-  const {problem,question,solution}: IndividualProblemState = useSelector((state:RootStateType) => state.app[0]);
+  const { id } = useParams<{ id: string }>(); 
+  let problemId = parseInt(id || "0", 10);
+  const {question,problem,solution}:IndividualProblemState = useSelector((state:RootStateType) => state.app[problemId]);
   return (
     <StyledProblem>
         <Question {...question} {...problem}/>
