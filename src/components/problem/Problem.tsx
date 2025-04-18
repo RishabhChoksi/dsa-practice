@@ -14,6 +14,7 @@ const StyledProblem = styled('div')`
     flex-direction: row;
     justify-content: start;
     padding: 0.4rem 0.5rem; 
+    background-color: rgb(52, 51, 51);
 
 `
 

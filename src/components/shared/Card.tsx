@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const StyledCard = styled("section")`
     background-color: #202020;
-    color: white;
     border: 0.1px solid gray;
     border-radius: 0.4rem;
     padding:0;
@@ -23,6 +22,7 @@ const StyledTitle = styled("h5")<{titleBgColor:string}>`
   background-color: ${p=>p.titleBgColor};
    position: sticky;
    font-size: 0.8rem;
+   color: #e1e1e1;
   top: 0; 
 `
 
