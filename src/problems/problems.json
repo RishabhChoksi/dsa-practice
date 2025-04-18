@@ -87,5 +87,49 @@
   "solution": {
     "solution": "class Solution {\n    public int maxProfit(int[] prices) {\n        /*\n        Solution 1:\n        The idea is to start from day 1 and maintain a previous minimum\n        and keep subtracting it current item ans store max profit\n        */\n        int min = prices[0], ans = 0;\n        for (int i = 1; i < prices.length; i++) {\n            int maxProfit = prices[i] - min;\n            //Only if maxProfit is greater than 0, update it,else default it to 0\n            if (maxProfit > 0) {\n                ans = Math.max(ans, maxProfit);\n            }\n            min = Math.min(min, prices[i]);\n        }\n        return ans;\n    }\n}"
   }
+},
+
+{
+  "problem": {
+    "id": 2,
+    "topic": "Arrays",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/product-of-array-except-self/description/",
+    "tags": [
+      "arrays","prefix sum"
+    ],
+    "difficultyLevel": "Medium"
+  },
+  "question": {
+    "heading": "Product of Array Except Self",
+    "question": "YGiven an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].\n\nThe product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\n\nYou must write an algorithm that runs in O(n) time and without using the division operation.",
+    "headingImages": [
+       ],
+    "examples": [
+      {
+        "id": 0,
+        "input": "nums = [1,2,3,4]",
+        "output": "[24,12,8,6]",
+        "explanation": "The product of all the elements of nums except nums[0] is 2*3*4 = 24.\nThe product of all the elements of nums except nums[1] is 1*3*4 = 12.\nThe product of all the elements of nums except nums[2] is 1*2*4 = 8.\nThe product of all the elements of nums except nums[3] is 1*2*3 = 6."
+      },
+      {
+        "id": 1,
+        "input": "nums = [-1,1,0,-3,3]",
+        "output": "[0,0,9,0,0]",
+        "explanation": "The product of all the elements of nums except nums[0] is 1*0*-3*3 = 0.\nThe product of all the elements of nums except nums[1] is -1*0*-3*3 = 0.\nThe product of all the elements of nums except nums[2] is -1*1*-3*3 = 9.\nThe product of all the elements of nums except nums[3] is -1*1*0*3 = 0.\nThe product of all the elements of nums except nums[4] is -1*1*0*-3 = 0."
+      }
+    ],
+    "constraints": [
+      "2 <= prices.length <= 10^5",
+      "-30 <= nums[i] <= 30",
+      "The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public int[] productExceptSelf(int[] nums) {\n        /*\n        Since we can't use division operation, we come up with idea\n        of right shifting and left shifting the products.\n        For eg, ans[2] = nums[0] * nums[1] * nums[3]\n        We skip nums[2] by right shifting the products by adding 1 \n        at start and similarly left shifting the products by adding 1\n        at end.\n        */\n\n        int n = nums.length;\n        int[] left = new int[n];\n        int[] right = new int[n];\n\n        // Create left array\n        left[0] = 1;\n        for (int i = 1; i < n; i++) {\n            /* \n            we can't replace left[i-1] to nums[i-1], we want\n            previous computed result. nums should start from 0 hence, nums[i-1] \n            */\n            left[i] = left[i - 1] * nums[i - 1];\n        }\n\n        // create right array\n        right[n - 1] = 1;\n        for (int i = n - 2; i > -1; i--) {\n            right[i] = nums[i + 1] * right[i + 1];\n        }\n\n        // Multiply products and reuse nums array\n        for (int i = 0; i < nums.length; i++) {\n            nums[i] = left[i] * right[i];\n        }\n\n        return nums;\n    }\n}"
+  }
 }
+
 ]

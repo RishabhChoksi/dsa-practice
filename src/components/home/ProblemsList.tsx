@@ -81,9 +81,9 @@ const ProblemsList = () => {
   };
 
   const handleVisitedClick = (id: number) => {
-    const updatedVisitedItems = visitedItems.includes(id)
-      ? visitedItems.filter((item) => item !== id) // Remove if already visited
-      : [...visitedItems, id]; // Add if not visited
+    if(visitedItems.includes(id))
+      return;
+    const updatedVisitedItems =  [...visitedItems, id]; // Add if not visited
 
     setVisitedItems(updatedVisitedItems); // Update state
     localStorage.setItem('visited', JSON.stringify(updatedVisitedItems)); // Update localStorage

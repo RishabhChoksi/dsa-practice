@@ -38,8 +38,11 @@ const Solution = ({solution}:SolutionState) => {
         } else if (/^\d+$/.test(match)) {
           // Numbers in green
           return `<span style="color: #b5cea8;">${match}</span>`;
-        } else if (/[><[\]{}()]/.test(match)) {
-          // Brackets and symbols in white
+        } else if (/[[\]]/.test(match)) {
+          // Square brackets in yellow
+          return `<span style="color: #FFD700;">${match}</span>`;
+        } else if (/[><{}()]/.test(match)) {
+          // Other brackets and symbols in white
           return `<span style="color: #ffffff;">${match}</span>`;
         }
         return match;
