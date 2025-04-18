@@ -1,4 +1,15 @@
 /**
+   * react-table
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   */
+
+/**
  * @license React
  * react-dom-client.production.js
  *
@@ -41,6 +52,16 @@
 /**
  * @license React
  * scheduler.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * use-sync-external-store-with-selector.production.js
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
