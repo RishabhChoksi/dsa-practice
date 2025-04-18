@@ -1,7 +1,5 @@
-import React from 'react'
 import { ExampleState } from './Question'
 import styled from 'styled-components'
-import Content from '../../shared/Content'
 
 const StyledExample = styled('section')`
   margin:0.5rem 0 1rem 0;
@@ -33,7 +31,7 @@ const Example = ({ id, input, output, explanation }: ExampleState) => {
 
   const updateContent = (content: string) => {
     return content.replace(
-      /\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else|true|false)\b|\d+|[><\[\]{}()]/g,
+      /\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else|true|false)\b|\d+|[><[\]{}()]/g,
       (match) => {
         if (/\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else)\b/.test(match)) {
           // Java keywords and specific words in green
@@ -44,7 +42,7 @@ const Example = ({ id, input, output, explanation }: ExampleState) => {
         } else if (/^\d+$/.test(match)) {
           // Numbers in green
           return `<span style="color: #b5cea8;">${match}</span>`;
-        } else if (/[><\[\]{}()]/.test(match)) {
+        } else if (/[><[\]{}()]/.test(match)) {
           // Brackets and symbols in white
           return `<span style="color: #ffffff;">${match}</span>`;
         }

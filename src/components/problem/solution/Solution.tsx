@@ -21,7 +21,7 @@ const Solution = ({solution}:SolutionState) => {
   
   const updateContent = (content: string) => {
     return content.replace(
-      /\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else|true|false)\b|\d+|[><\[\]{}()]/g,
+      /\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else|true|false)\b|\d+|[><[\]{}()]/g,
       (match) => {
         if (/\b(Input|Output|Explanation|class|if|while|public|private|protected|return|static|void|int|boolean|new|this|for|else)\b/.test(match)) {
           // Java keywords and specific words in green
@@ -32,14 +32,8 @@ const Solution = ({solution}:SolutionState) => {
         } else if (/^\d+$/.test(match)) {
           // Numbers in green
           return `<span style="color: #b5cea8;">${match}</span>`;
-        } else if (/[{}()]/.test(match)) {
-          // Parentheses and curly braces in purple
-          return `<span style="color: #da70d6;">${match}</span>`;
-        } else if (/[\[\]]/.test(match)) {
-          // Square brackets in blue
-          return `<span style="color: #ffd700;">${match}</span>`;
-        } else if (/[><]/.test(match)) {
-          // Greater than and less than symbols in white
+        } else if (/[><[\]{}()]/.test(match)) {
+          // Brackets and symbols in white
           return `<span style="color: #ffffff;">${match}</span>`;
         }
         return match;

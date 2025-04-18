@@ -8,7 +8,6 @@ padding: 0;
 
 
 const Content = ({children}:any) => {
-    let content:string = children.toString()
     
     const updateContent = (content:string) => {
         console.log(content)
