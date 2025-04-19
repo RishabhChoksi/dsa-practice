@@ -102,7 +102,7 @@
   },
   "question": {
     "heading": "Product of Array Except Self",
-    "question": "YGiven an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].\n\nThe product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\n\nYou must write an algorithm that runs in O(n) time and without using the division operation.",
+    "question": "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].\n\nThe product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\n\nYou must write an algorithm that runs in O(n) time and without using the division operation.",
     "headingImages": [
        ],
     "examples": [
@@ -129,6 +129,49 @@
   },
   "solution": {
     "solution": "class Solution {\n    public int[] productExceptSelf(int[] nums) {\n        /*\n        Since we can't use division operation, we come up with idea\n        of right shifting and left shifting the products.\n        For eg, ans[2] = nums[0] * nums[1] * nums[3]\n        We skip nums[2] by right shifting the products by adding 1 \n        at start and similarly left shifting the products by adding 1\n        at end.\n        */\n\n        int n = nums.length;\n        int[] left = new int[n];\n        int[] right = new int[n];\n\n        // Create left array\n        left[0] = 1;\n        for (int i = 1; i < n; i++) {\n            /* \n            we can't replace left[i-1] to nums[i-1], we want\n            previous computed result. nums should start from 0 hence, nums[i-1] \n            */\n            left[i] = left[i - 1] * nums[i - 1];\n        }\n\n        // create right array\n        right[n - 1] = 1;\n        for (int i = n - 2; i > -1; i--) {\n            right[i] = nums[i + 1] * right[i + 1];\n        }\n\n        // Multiply products and reuse nums array\n        for (int i = 0; i < nums.length; i++) {\n            nums[i] = left[i] * right[i];\n        }\n\n        return nums;\n    }\n}"
+  }
+}
+,
+{
+  "problem": {
+    "id": 3,
+    "topic": "Arrays",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/rotate-array/description/",
+    "tags": [
+      "arrays","math", "two pointers"
+    ],
+    "difficultyLevel": "Medium"
+  },
+  "question": {
+    "heading": "Rotate Array",
+    "question": "Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.",
+    "headingImages": [
+       ],
+    "examples": [
+      {
+        "id": 0,
+        "input": "nums = [1,2,3,4,5,6,7], k = 3",
+        "output": "[5,6,7,1,2,3,4]",
+        "explanation": "rotate 1 steps to the right: [7,1,2,3,4,5,6]\nrotate 2 steps to the right: [6,7,1,2,3,4,5]\nrotate 3 steps to the right: [5,6,7,1,2,3,4]"
+      },
+      {
+        "id": 1,
+        "input": "nums = [-1,-100,3,99], k = 2",
+        "output": "[3,99,-1,-100]",
+        "explanation": "rotate 1 steps to the right: [99,-1,-100,3]\nrotate 2 steps to the right: [3,99,-1,-100]"
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-2^31 <= nums[i] <= 2^31 - 1",
+      "0 <= k <= 10^5"
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public void rotate(int[] nums, int k) {\n        /*\n        If k=n, then its one full rotation, hence no change in result\n        hence, if k=71, n=70, only one rotation k=k%n optimizes k\n        Solution 1: Standard way to reverse is 3 steps:\n        Reverse whole array, Reverse 0-k elements, Reverse k-n elements\n        */\n        int n = nums.length;\n        k = k % n;\n        reverse(0, n - 1, nums);\n        reverse(0, k - 1, nums);\n        reverse(k, n - 1, nums);\n    }\n\n    public void reverse(int start, int end, int[] arr) {\n        while (start < end) {\n            int temp = arr[start];\n            arr[start] = arr[end];\n            arr[end] = temp;\n            start++;\n            end--;\n        }\n    }\n\n}"
   }
 }
 
