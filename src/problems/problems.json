@@ -439,6 +439,156 @@
   "solution": {
     "solution": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode(int x) {\n *         val = x;\n *         next = null;\n *     }\n * }\n */\npublic class Solution {\n    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {\n\n        /*\n        Solution 1: \n        Simple find lengths and skip first few nodes and start comparing\n        references using two pointers\n        */\n\n        // find lengths\n        int m = getLength(headA);\n        int n = getLength(headB);\n        int skip = m - n;\n\n        // skip unnecessary start elements\n        if (skip > 0) {\n            while (skip != 0) {\n                headA = headA.next;\n                skip--;\n            }\n        } else {\n            skip = -skip;\n            while (skip != 0) {\n                headB = headB.next;\n                skip--;\n            }\n        }\n\n        // use two pointers and compare references\n        while (headA != null || headB != null) {\n            if (headA == headB) {\n                return headA;\n            }\n            headA = headA.next;\n            headB = headB.next;\n        }\n        return null;\n\n    }\n\n    int getLength(ListNode headA) {\n        ListNode current = headA;\n        int length = 0;\n        while (current != null) {\n            length++;\n            current = current.next;\n        }\n        return length;\n    }\n}"
   }
+},
+{
+  "problem": {
+    "id": 10,
+    "topic": "Linked List",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/merge-two-sorted-lists/description/",
+    "tags": [
+      "linked list","recursion"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Merge Two Sorted Lists",
+    "question": "You are given the heads of two sorted linked lists list1 and list2.\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\nReturn the head of the merged linked list.",
+    "headingImages": [
+      "https://assets.leetcode.com/uploads/2020/10/03/merge_ex1.jpg"
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "list1 = [1,2,4], list2 = [1,3,4]",
+        "output": "[1,1,2,3,4,4]",
+        "explanation": ""
+      },
+      {
+        "id": 1,
+        "input": "list1 = [], list2 = []",
+        "output": "[]",
+        "explanation": ""
+      },
+      {
+        "id": 2,
+        "input": "list1 = [], list2 = [0]",
+        "output": "[0]",
+        "explanation": ""
+      }
+    ],
+    "constraints": [
+      "The number of nodes in both lists is in the range [0, 50].",
+      "100 <= Node.val <= 100.",
+      "Both list1 and list2 are sorted in non-decreasing order."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode() {}\n *     ListNode(int val) { this.val = val; }\n *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n * }\n */\nclass Solution {\n    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {\n        /*\n        Solution 1: \n        Simply start iterating from both of them and whichever is smaller\n        keep adding it to ans.\n        If any runs out of items, there is nothing to compare, simply attach the\n        remaining elements to answer and break;\n        */\n\n        ListNode ansHead = new ListNode(0);\n        ListNode ansHeadBackup = ansHead;\n\n        while (list1 != null || list2 != null) {\n            if (list1 != null && list2 != null) {\n                if (list1.val <= list2.val) {\n                    ansHead.next = list1;\n                    list1 = list1.next;\n                } else {\n                    ansHead.next = list2;\n                    list2 = list2.next;\n                }\n                ansHead = ansHead.next;\n            } else if (list1 != null) {\n                ansHead.next = list1;\n                break;\n            } else if (list2 != null) {\n                ansHead.next = list2;\n                break;\n            }\n        }\n        return ansHeadBackup.next;\n    }\n}"
+  }
+},
+{
+  "problem": {
+    "id": 11,
+    "topic": "Linked List",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/linked-list-cycle/description/",
+    "tags": [
+      "linked list","hash table", "two pointers"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Linked List Cycle",
+    "question": "Given head, the head of a linked list, determine if the linked list has a cycle in it.\n\nThere is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.\n\nReturn true if there is a cycle in the linked list. Otherwise, return false.\n",
+    "headingImages": [
+      "https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png",
+      "https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png",
+      "https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png"
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "head = [3,2,0,-4], pos = 1",
+        "output": "true",
+        "explanation": "There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed)."
+      },
+      {
+        "id": 1,
+        "input": "head = [1,2], pos = 0",
+        "output": "true",
+        "explanation": "There is a cycle in the linked list, where the tail connects to the 0th node."
+      },
+      {
+        "id": 2,
+        "input": "head = [1], pos = -1",
+        "output": "false",
+        "explanation": "There is no cycle in the linked list."
+      }
+    ],
+    "constraints": [
+      "The number of the nodes in the list is in the range [0, 10^4].",
+      "-10^5 <= Node.val <= 10^5",
+      "pos is -1 or a valid index in the linked-list."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "/**\n * Definition for singly-linked list.\n * class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode(int x) {\n *         val = x;\n *         next = null;\n *     }\n * }\n */\npublic class Solution {\n    public boolean hasCycle(ListNode head) {\n        /*\n        Solution 1:\n        We run two pointers, slow and fast.\n        Fast runs double speed. If there is a cycle, slow and fast\n        will meet and we return true else slow will reach null and \n        return false.\n        */\n        ListNode slow = head, fast = head;\n        if (head == null || head.next == null) {\n            return false;\n        }\n        // Add additional null check to avoid exception\n        while (slow != null && fast.next != null && fast.next.next != null) {\n            slow = slow.next;\n            fast = fast.next.next;\n            if (slow == fast) {\n                return true;\n            }\n        }\n        return false;\n    }\n}"
+  }
+},
+{
+  "problem": {
+    "id": 12,
+    "topic": "Linked List",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/reverse-linked-list/description/",
+    "tags": [
+      "linked list","recursion"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Reverse Linked List",
+    "question": "Given the head of a singly linked list, reverse the list, and return the reversed list.\n",
+    "headingImages": [
+      "https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg",
+      "https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg",
+      "https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png"
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "head = [1,2,3,4,5]",
+        "output": "[5,4,3,2,1]",
+        "explanation": ""
+      },
+      {
+        "id": 1,
+        "input": "head = [1,2]",
+        "output": "[2,1]",
+        "explanation": ""
+      },
+      {
+        "id": 2,
+        "input": "head = []",
+        "output": "[]",
+        "explanation": ""
+      }
+    ],
+    "constraints": [
+      "The number of nodes in the list is the range [0, 5000].",
+      "-5000 <= Node.val <= 5000"
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode() {}\n *     ListNode(int val) { this.val = val; }\n *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n * }\n */\nclass Solution {\n    private ListNode newHead;\n\n    public ListNode reverseList(ListNode head) {\n        /*\n        Solution 1:\n        We basically start iterating and maintain previous and current's next\n        in temp. We point current to previous.\n        Later we set previous to current and current to temp.\n        */\n        /*\n        ListNode curr=head,prev=null;\n        while(curr!=null){\n            ListNode temp = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = temp;\n        }\n        return prev;\n        */\n\n        /*\n        Solution 2:\n        We use recursion and in the base case we simply return the node and \n        store the newHead. Once we get lastNode, when we travel back upwards,\n        we set lastNode's next as current node. After completing, we set\n        last node's next as null and return newHead.\n        The idea is to set stuff while travelling back from stack.\n        */\n        if (head == null)\n            return null;\n        ListNode last = reverse(head);\n        last.next = null;\n        return newHead;\n    }\n\n    ListNode reverse(ListNode node) {\n        if (node.next == null) {\n            newHead = node;\n            return node;\n        } else {\n            ListNode last = reverse(node.next);\n            last.next = node;\n            return node;\n        }\n    }\n}"
+  }
 }
 
 
