@@ -173,6 +173,47 @@
   "solution": {
     "solution": "class Solution {\n    public void rotate(int[] nums, int k) {\n        /*\n        If k=n, then its one full rotation, hence no change in result\n        hence, if k=71, n=70, only one rotation k=k%n optimizes k\n        Solution 1: Standard way to reverse is 3 steps:\n        Reverse whole array, Reverse 0-k elements, Reverse k-n elements\n        */\n        int n = nums.length;\n        k = k % n;\n        reverse(0, n - 1, nums);\n        reverse(0, k - 1, nums);\n        reverse(k, n - 1, nums);\n    }\n\n    public void reverse(int start, int end, int[] arr) {\n        while (start < end) {\n            int temp = arr[start];\n            arr[start] = arr[end];\n            arr[end] = temp;\n            start++;\n            end--;\n        }\n    }\n\n}"
   }
+},
+{
+  "problem": {
+    "id": 4,
+    "topic": "Arrays",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/max-consecutive-ones/description/",
+    "tags": [
+      "arrays"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Max Consecutive Ones",
+    "question": "Given a binary array nums, return the maximum number of consecutive 1's in the array.",
+    "headingImages": [
+       ],
+    "examples": [
+      {
+        "id": 0,
+        "input": "nums = [1,1,0,1,1,1]",
+        "output": "3",
+        "explanation": "The first two digits or the last three digits are consecutive 1s.\nThe maximum number of consecutive 1s is 3."
+      },
+      {
+        "id": 1,
+        "input": "nums = [1,0,1,1,0,1]",
+        "output": "2",
+        "explanation": ""
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "nums[i] is either 0 or 1"
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public int findMaxConsecutiveOnes(int[] nums) {\n        /*\n        Solution 1: Maintain the max and currentSum. If nums[i]=0,\n        store currentSum if bigger than max and reset currentSum\n        */\n        int ans = 0, currentSum = 0;\n        for (int i = 0; i < nums.length; i++) {\n            if (nums[i] == 1) {\n                currentSum++;\n            } else {\n                currentSum = 0;\n            }\n            ans = Math.max(currentSum, ans);\n        }\n        return ans;\n    }\n}"
+  }
 }
 
 ]

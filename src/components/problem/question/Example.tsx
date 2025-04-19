@@ -57,7 +57,7 @@ const Example = ({ id, input, output, explanation }: ExampleState) => {
       <StyledExampleSection>
         <div dangerouslySetInnerHTML={{ __html: updateContent(`Input: ${input}`) }}></div>
         <div dangerouslySetInnerHTML={{ __html:  updateContent(`Output: ${output}`) }}></div>
-        <div dangerouslySetInnerHTML={{ __html:  updateContent(`Explanation: ${explanation}`) }}></div>
+        { explanation && <div dangerouslySetInnerHTML={{ __html:  updateContent(`Explanation: ${explanation}`) }}></div>}
       </StyledExampleSection>
     </StyledExample>
   )
