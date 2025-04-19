@@ -633,6 +633,58 @@
     "solution": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode() {}\n *     ListNode(int val) { this.val = val; }\n *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n * }\n */\nclass Solution {\n    public boolean isPalindrome(ListNode head) {\n        /*\n        Solution 1: \n        Simply find mid, reverse from mid and compare mid and from head\n        */\n\n        ListNode mid = getMid(head);\n        ListNode reversedHalf = reverse(mid);\n        while (reversedHalf != null) {\n            if (reversedHalf.val != head.val) {\n                return false;\n            }\n            reversedHalf = reversedHalf.next;\n            head = head.next;\n        }\n        return true;\n    }\n\n    ListNode getMid(ListNode node) {\n        ListNode slow = node, fast = node;\n        while (fast != null && fast.next != null) {\n            slow = slow.next;\n            fast = fast.next.next;\n        }\n        return slow;\n    }\n\n    ListNode reverse(ListNode head) {\n        ListNode curr = head, prev = null;\n        while (curr != null) {\n            ListNode temp = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = temp;\n        }\n        return prev;\n    }\n}"
   }
 }
+,
+{
+  "problem": {
+    "id": 14,
+    "topic": "Linked List",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/linked-list-cycle-ii/description/",
+    "tags": [
+      "linked list","hash table","two pointers"
+    ],
+    "difficultyLevel": "Medium"
+  },
+  "question": {
+    "heading": "Linked List Cycle II",
+    "question": "Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null.\n\nThere is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to (0-indexed). It is -1 if there is no cycle. Note that pos is not passed as a parameter.\n\nDo not modify the linked list.\n\n",
+    "headingImages": [
+      "https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png",
+      "https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png",
+      "https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png"
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "head = [3,2,0,-4], pos = 1",
+        "output": "tail connects to node index 1",
+        "explanation": "There is a cycle in the linked list, where tail connects to the second node."
+      },
+      {
+        "id": 1,
+        "input": "head = [1,2], pos = 0",
+        "output": "tail connects to node index 0",
+        "explanation": "There is a cycle in the linked list, where tail connects to the first node."
+      },
+      {
+        "id": 2,
+        "input": "head = [1], pos = -1",
+        "output": "no cycle",
+        "explanation": "There is no cycle in the linked list."
+      }
+    ],
+    "constraints": [
+      "The number of the nodes in the list is in the range [0, 10^4].",
+      "-10^5 <= Node.val <= 10^5",
+      "pos is -1 or a valid index in the linked-list."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "/**\n * Definition for singly-linked list.\n * class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode(int x) {\n *         val = x;\n *         next = null;\n *     }\n * }\n */\npublic class Solution {\n    public ListNode detectCycle(ListNode head) {\n        /*\n        Solution 1:\n        Simply find the cycle, once you find the cycle use head/third\n        pointer and move point by point until they meet, once they meet,\n        that is the cycle point.\n        */\n\n        // base case\n        if (head == null || head.next == null) {\n            return null;\n        }\n        ListNode slow = head, fast = head;\n        while (true) {\n            slow = slow.next;\n            fast = fast.next.next;\n            // if someone reaches null, means no cycle\n            if (slow == null || fast == null || fast.next == null) {\n                return null;\n            }\n            // cycle found, let's check step by step now\n            if (slow == fast) {\n                while (head != fast) {\n                    fast = fast.next;\n                    head = head.next;\n                }\n                return head;\n            }\n        }\n    }\n}"
+  }
+}
 
 
 
