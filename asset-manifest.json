@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/dsa-practice/static/css/main.50845365.css",
-    "main.js": "/dsa-practice/static/js/main.7fb8dc56.js",
+    "main.js": "/dsa-practice/static/js/main.d53cde8b.js",
     "index.html": "/dsa-practice/index.html",
     "main.50845365.css.map": "/dsa-practice/static/css/main.50845365.css.map",
-    "main.7fb8dc56.js.map": "/dsa-practice/static/js/main.7fb8dc56.js.map"
+    "main.d53cde8b.js.map": "/dsa-practice/static/js/main.d53cde8b.js.map"
   },
   "entrypoints": [
     "static/css/main.50845365.css",
-    "static/js/main.7fb8dc56.js"
+    "static/js/main.d53cde8b.js"
   ]
 }
