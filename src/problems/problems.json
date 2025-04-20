@@ -919,6 +919,53 @@
   "solution": {
     "solution": "class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        /*\n        Solution 1: \n        Simply iterate and look for diff in map, if diff is present\n        in map, means we found the match else insert element as key and\n        index as value in map\n        */\n        HashMap<Integer, Integer> map = new HashMap();\n\n        for (int i = 0; i < nums.length; i++) {\n            int diff = target - nums[i];\n            if (map.containsKey(diff)) {\n                return new int[] { map.get(diff), i };\n            } else {\n                map.put(nums[i], i);\n            }\n        }\n        return null;\n    }\n}"
   }
+},
+{
+  "problem": {
+    "id": 20,
+    "topic": "Arrays",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/3sum/description/",
+    "tags": [
+      "arrays","two pointers", "sorting"
+    ],
+    "difficultyLevel": "Medium"
+  },
+  "question": {
+    "heading": "3Sum",
+    "question": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\n\nNotice that the solution set must not contain duplicate triplets.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "nums = [-1,0,1,2,-1,-4]",
+        "output": "[[-1,-1,2],[-1,0,1]]",
+        "explanation": "nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.\nnums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.\nnums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.\nThe distinct triplets are [-1,0,1] and [-1,-1,2].\n\nNotice that the order of the output and the order of the triplets does not matter.\n"
+      },
+      {
+        "id": 1,
+        "input": "nums = [0,1,1]",
+        "output": "[]",
+        "explanation": "The only possible triplet does not sum up to 0."
+      },
+      {
+        "id": 2,
+        "input": "nums = [0,0,0]",
+        "output": "[[0,0,0]]",
+        "explanation": "The only possible triplet sums up to 0."
+      }
+    ],
+    "constraints": [
+      "3 <= nums.length <= 3000",
+      "-10^5 <= nums[i] <= 10^5"
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public List<List<Integer>> threeSum(int[] nums) {\n        /*\n        Solution 1: \n        Simply sort the array. Start with first element and use two pointer\n        pointing the second to last and once found and add them to the\n        set. If you find that previous and current element is same, skip the\n        current since it will have same result. Use set to avoid duplicates.\n        Remember, set compares the elements one by one before storing them, so\n        leverage that.\n        */\n\n        Arrays.sort(nums);\n        HashSet<List<Integer>> set = new HashSet();\n\n        for (int i = 0; i < nums.length; i++) {\n            int currEl = nums[i], target = -currEl;\n            int fp = i + 1, sp = nums.length - 1;\n            // skip if same\n            if (i >= 1 && nums[i] == nums[i - 1]) {\n                continue;\n            }\n            while (fp < sp) {\n                int sum = nums[fp] + nums[sp];\n                if (sum == target) {\n                    set.add(List.of(currEl, nums[fp], nums[sp]));\n                    fp++;\n                }\n                if (sum < target) {\n                    fp++;\n                } else if (sum > target) {\n                    sp--;\n                }\n            }\n        }\n        return new ArrayList(set);\n    }\n}"
+  }
 }
 
 
