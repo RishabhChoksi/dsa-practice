@@ -1102,6 +1102,103 @@
     "solution": "class Solution {\n    public boolean isAnagram(String s, String t) {\n        /*\n        Solution 1: \n        Sort both the string and compare it O(nlogn)\n        Solution 2:\n        If length is different, rightway they can't be anagram of each other.\n        Maintain the freq of each letter in letters array, increment if\n        found in s and decrement in t. For anagram ones, array will have all\n        zeroes.\n        */\n\n        int letters[] = new int[26];\n        if (s.length() != t.length()) {\n            return false;\n        }\n        for (int i = 0; i < s.length(); i++) {\n            letters[(s.charAt(i) - 'a')]++;\n            letters[(t.charAt(i) - 'a')]--;\n        }\n\n        for (int freq : letters) {\n            if (freq > 0) {\n                return false;\n            }\n        }\n\n        return true;\n    }\n}"
   }
 }
+,
+{
+  "problem": {
+    "id": 24,
+    "topic": "Hash Table",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/group-anagrams/description/",
+    "tags": [
+      "arrays","hash table","sorting","string"
+    ],
+    "difficultyLevel": "Medium"
+  },
+  "question": {
+    "heading": "Group Anagrams",
+    "question": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+        "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]",
+        "explanation": "There is no string in strs that can be rearranged to form \"bat\".\n\nThe strings \"nat\" and \"tan\" are anagrams as they can be rearranged to form each other.\n\nThe strings \"ate\", \"eat\", and \"tea\" are anagrams as they can be rearranged to form each other."
+      },
+      {
+        "id": 1,
+        "input": "strs = [\"\"]",
+        "output": "[[\"\"]]",
+        "explanation": ""
+      },
+      {
+        "id": 2,
+        "input": "strs = [\"a\"]",
+        "output": "[[\"a\"]]",
+        "explanation": ""
+      }
+    ],
+    "constraints": [
+      "1 <= strs.length <= 10^4",
+      "0 <= strs[i].length <= 100",
+      "strs[i] consists of lowercase English letters."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public List<List<String>> groupAnagrams(String[] strs) {\n        /*\n        Solution 1:\n        We create a hashmap and store the sorted version as key\n        and original anagram string as list of values.\n        Remember to check how we sort the alphabets in string using\n        toCharArray(), then Arrays.sort and then back to String.valueOf\n        */\n\n        HashMap<String, List<String>> map = new HashMap();\n        List<List<String>> ans = new ArrayList();\n\n        for (String str : strs) {\n            char[] chars = str.toCharArray();\n            Arrays.sort(chars);\n            String sortedString = String.valueOf(chars);\n            if (map.containsKey(sortedString)) {\n                map.get(sortedString).add(str);\n            } else {\n                map.put(sortedString, new ArrayList(List.of(str)));\n            }\n        }\n        for (String str : map.keySet()) {\n            ans.add(map.get(str));\n        }\n        return ans;\n\n    }\n}"
+  }
+}
+,
+{
+  "problem": {
+    "id": 25,
+    "topic": "Hash Table",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/first-missing-positive/description/",
+    "tags": [
+      "arrays","hash table"
+    ],
+    "difficultyLevel": "Hard"
+  },
+  "question": {
+    "heading": "First Missing Positive",
+    "question": "Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.\n\n\nYou must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "nums = [1,2,0]",
+        "output": "3",
+        "explanation": "The numbers in the range [1,2] are all in the array."
+      },
+      {
+        "id": 1,
+        "input": "nums = [3,4,-1,1]",
+        "output": "2",
+        "explanation": "1 is in the array but 2 is missing."
+      },
+      {
+        "id": 2,
+        "input": "nums = [7,8,9,11,12]",
+        "output": "1",
+        "explanation": "The smallest positive integer 1 is missing."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-2^31 <= nums[i] <= 2^31 - 1"
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public int firstMissingPositive(int[] nums) {\n        /*\n        Solution 1:\n        The solution is very simple. So any result is always going to be\n        between 1 to n because if all numbers in array are greater than n,\n        then 1 is result.\n        What we do is simply place any number in its position if indexing\n        started from 1. For example, 2 should be placed in second position\n        (index 1). Similary element x will be stored in x-1 position.\n        These storing will happen using swapping, keep swapping until you\n        find the correct place.\n        */\n\n        for (int i = 0; i < nums.length; i++) {\n            int el = nums[i];\n            // These condition is important. If length is 4, and I have number,\n            // 4, it will be eventually placed at 3. But 0 can't be placed at \n            // -1. So start with 1 and end at nums.length and simply check\n            // if i is in correct position.\n            // We ignore all negatives since they can't be placed.\n            // We also ignore all numbers greater than n\n            while (el >= 1 && el <= nums.length && i != el - 1) {\n                // we break if two numbers to be swapped are same\n                // to avoid infinite loop\n                if (nums[el - 1] == nums[i]) {\n                    break;\n                }\n                swap(nums, el - 1, i);\n                el = nums[i];\n            }\n        }\n\n        for (int i = 0; i < nums.length; i++) {\n            if (nums[i] != i + 1) {\n                return i + 1;\n            }\n        }\n\n        return nums.length + 1;\n\n    }\n\n    void swap(int[] nums, int i, int j) {\n        int temp = nums[i];\n        nums[i] = nums[j];\n        nums[j] = temp;\n    }\n}"
+  }
+}
 
 
 
