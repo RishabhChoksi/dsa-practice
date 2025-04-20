@@ -727,6 +727,56 @@
   "solution": {
     "solution": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode() {}\n *     ListNode(int val) { this.val = val; }\n *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n * }\n */\nclass Solution {\n    public ListNode middleNode(ListNode head) {\n        /*\n        Solution 1:\n        We create two pointers slow and fast. fast runs at double speed.\n        When fast reaches the last node, slow would be at mid.\n        */\n        ListNode slow = head, fast = head;\n        while (fast != null && fast.next != null) {\n            slow = slow.next;\n            fast = fast.next.next;\n        }\n        return slow;\n    }\n}"
   }
+},
+{
+  "problem": {
+    "id": 16,
+    "topic": "Linked List",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/",
+    "tags": [
+      "linked list","two pointers"
+    ],
+    "difficultyLevel": "Medium"
+  },
+  "question": {
+    "heading": "Remove Nth Node From End of List",
+    "question": "Given the head of a linked list, remove the nth node from the end of the list and return its head.\n\n",
+    "headingImages": [
+      "https://assets.leetcode.com/uploads/2020/10/03/remove_ex1.jpg"
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "head = [1,2,3,4,5], n = 2",
+        "output": "[1,2,3,5]",
+        "explanation": "T"
+      },
+      {
+        "id": 1,
+        "input": "head = [1], n = 1",
+        "output": "[]",
+        "explanation": ""
+      },
+      {
+        "id": 2,
+        "input": "head = [1,2], n = 1",
+        "output": "[1]",
+        "explanation": ""
+      }
+    ],
+    "constraints": [
+      "The number of nodes in the list is sz.",
+      "1 <= sz <= 30",
+      "0 <= Node.val <= 100",
+      "1 <= n <= sz"
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode() {}\n *     ListNode(int val) { this.val = val; }\n *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n * }\n */\nclass Solution {\n    public ListNode removeNthFromEnd(ListNode head, int n) {\n        /*\n        Solution 1:\n        Simply create a distance of n between first and second pointer and then \n        go step by step, until second pointer reaches null. With these first\n        pointer would reach just before the node to be removed. After that\n        remove the node     */\n        ListNode first = head, second = head;\n         // We want to be one step before the el so n+1\n        for (int i = 0; i < n + 1; i++) {\n         //if second reaches null, it means we are trying to remove first element\n            if (second == null) {\n                head = head.next;\n                return head;\n            }\n            second = second.next;\n        }\n        while (second != null) {\n            first = first.next;\n            second = second.next;\n        }\n        // delete the element\n        first.next = first.next.next;\n\n        return head;\n    }\n}"
+  }
 }
 
 
