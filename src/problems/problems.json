@@ -870,6 +870,56 @@
     "solution": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode() {}\n *     ListNode(int val) { this.val = val; }\n *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n * }\n */\nclass Solution {\n    public void reorderList(ListNode head) {\n        /*\n        Solution 1: \n        Find the mid and reverse from it and make it as second half.\n        The place from where you found mid, make it as null and make\n        it as first half.\n        Merge the two using two pointers\n        */\n\n        // Find middle of the list\n        ListNode slow = head, fast = head;\n        while (fast != null && fast.next != null && fast.next.next != null) {\n            slow = slow.next;\n            fast = fast.next.next;\n        }\n\n        // Split the list into 2 halves\n        ListNode secondHalf = slow.next;\n        slow.next = null;\n\n        // Reverse the secondHalf\n        secondHalf = reverse(secondHalf);\n\n        ListNode firstHalf = head;\n        while (secondHalf != null) {\n            ListNode firstNext = firstHalf.next;\n            ListNode secondNext = secondHalf.next;\n\n            firstHalf.next = secondHalf;\n            secondHalf.next = firstNext;\n\n            firstHalf = firstNext;\n            secondHalf = secondNext;\n        }\n\n    }\n\n    ListNode reverse(ListNode head) {\n        ListNode curr = head, prev = null;\n        while (curr != null) {\n            ListNode temp = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = temp;\n        }\n        return prev;\n    }\n}"
   }
 }
+,
+{
+  "problem": {
+    "id": 19,
+    "topic": "Arrays",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/reorder-list/",
+    "tags": [
+      "arrays","hash table"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Two Sum",
+    "question": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "nums = [2,7,11,15], target = 9",
+        "output": "[0,1]",
+        "explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+      },
+      {
+        "id": 1,
+        "input": "nums = [3,2,4], target = 6",
+        "output": "[1,2]",
+        "explanation": ""
+      },
+      {
+        "id": 2,
+        "input": "nums = [3,3], target = 6",
+        "output": "[0,1]",
+        "explanation": ""
+      }
+    ],
+    "constraints": [
+      "2 <= nums.length <= 10^4",
+      "-10^9 <= nums[i] <= 10^9",
+      "-10^9 <= target <= 10^9",
+      "Only one valid answer exists."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        /*\n        Solution 1: \n        Simply iterate and look for diff in map, if diff is present\n        in map, means we found the match else insert element as key and\n        index as value in map\n        */\n        HashMap<Integer, Integer> map = new HashMap();\n\n        for (int i = 0; i < nums.length; i++) {\n            int diff = target - nums[i];\n            if (map.containsKey(diff)) {\n                return new int[] { map.get(diff), i };\n            } else {\n                map.put(nums[i], i);\n            }\n        }\n        return null;\n    }\n}"
+  }
+}
 
 
 
