@@ -1060,7 +1060,49 @@
   "solution": {
     "solution": "class Solution {\n    public boolean containsDuplicate(int[] nums) {\n        /*\n        Solution 1:\n        Create a hashset and store elements inside it if not present.\n        If present, return true.\n        */\n        HashSet set = new HashSet();\n        for (int num : nums) {\n            if (set.contains(num)) {\n                return true;\n            }\n            set.add(num);\n        }\n        return false;\n    }\n}"
   }
+},
+{
+  "problem": {
+    "id": 23,
+    "topic": "Arrays",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/valid-anagram/description/",
+    "tags": [
+      "string","hash table","sorting"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Valid Anagram",
+    "question": "Given two strings s and t, return true if t is an anagram of s, and false otherwise.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "s = \"anagram\", t = \"nagaram\"",
+        "output": "true",
+        "explanation": ""
+      },
+      {
+        "id": 1,
+        "input": "s = \"rat\", t = \"car\"",
+        "output": "false",
+        "explanation": ""
+      }
+    ],
+    "constraints": [
+      "1 <= s.length, t.length <= 5 * 10^4",
+      "s and t consist of lowercase English letters."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public boolean isAnagram(String s, String t) {\n        /*\n        Solution 1: \n        Sort both the string and compare it O(nlogn)\n        Solution 2:\n        If length is different, rightway they can't be anagram of each other.\n        Maintain the freq of each letter in letters array, increment if\n        found in s and decrement in t. For anagram ones, array will have all\n        zeroes.\n        */\n\n        int letters[] = new int[26];\n        if (s.length() != t.length()) {\n            return false;\n        }\n        for (int i = 0; i < s.length(); i++) {\n            letters[(s.charAt(i) - 'a')]++;\n            letters[(t.charAt(i) - 'a')]--;\n        }\n\n        for (int freq : letters) {\n            if (freq > 0) {\n                return false;\n            }\n        }\n\n        return true;\n    }\n}"
+  }
 }
+
 
 
 
