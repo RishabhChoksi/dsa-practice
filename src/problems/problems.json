@@ -684,6 +684,49 @@
   "solution": {
     "solution": "/**\n * Definition for singly-linked list.\n * class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode(int x) {\n *         val = x;\n *         next = null;\n *     }\n * }\n */\npublic class Solution {\n    public ListNode detectCycle(ListNode head) {\n        /*\n        Solution 1:\n        Simply find the cycle, once you find the cycle use head/third\n        pointer and move point by point until they meet, once they meet,\n        that is the cycle point.\n        */\n\n        // base case\n        if (head == null || head.next == null) {\n            return null;\n        }\n        ListNode slow = head, fast = head;\n        while (true) {\n            slow = slow.next;\n            fast = fast.next.next;\n            // if someone reaches null, means no cycle\n            if (slow == null || fast == null || fast.next == null) {\n                return null;\n            }\n            // cycle found, let's check step by step now\n            if (slow == fast) {\n                while (head != fast) {\n                    fast = fast.next;\n                    head = head.next;\n                }\n                return head;\n            }\n        }\n    }\n}"
   }
+},
+{
+  "problem": {
+    "id": 15,
+    "topic": "Linked List",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/middle-of-the-linked-list/description/",
+    "tags": [
+      "linked list","two pointers"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Middle of the Linked List",
+    "question": "Given the head of a singly linked list, return the middle node of the linked list.\n\nIf there are two middle nodes, return the second middle node.\n\n",
+    "headingImages": [
+      "https://assets.leetcode.com/uploads/2021/07/23/lc-midlist1.jpg",
+      "https://assets.leetcode.com/uploads/2021/07/23/lc-midlist1.jpg"
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "head = [1,2,3,4,5]",
+        "output": "[3,4,5]",
+        "explanation": "The middle node of the list is node 3."
+      },
+      {
+        "id": 1,
+        "input": "head = [1,2,3,4,5,6]",
+        "output": "[4,5,6]",
+        "explanation": "Since the list has two middle nodes with values 3 and 4, we return the second one."
+      }
+    ],
+    "constraints": [
+      "The number of nodes in the list is in the range [1, 100].",
+      "1 <= Node.val <= 100"
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode() {}\n *     ListNode(int val) { this.val = val; }\n *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n * }\n */\nclass Solution {\n    public ListNode middleNode(ListNode head) {\n        /*\n        Solution 1:\n        We create two pointers slow and fast. fast runs at double speed.\n        When fast reaches the last node, slow would be at mid.\n        */\n        ListNode slow = head, fast = head;\n        while (fast != null && fast.next != null) {\n            slow = slow.next;\n            fast = fast.next.next;\n        }\n        return slow;\n    }\n}"
+  }
 }
 
 
