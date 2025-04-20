@@ -12,6 +12,7 @@ const StyledProblemsList = styled('section')`
   background-color: #262626;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
   color: #e1e1e1;
   display: flex;
   flex-direction: column;
@@ -19,18 +20,32 @@ const StyledProblemsList = styled('section')`
   align-items:center ;
 `;
 
+const StyledTableContainer = styled('section')`
+  width: 80%;
+  max-height: 85vh; 
+  overflow-y: auto; /* Enable vertical scrolling */
+  justify-self: center;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  margin: 0;
+  border: 1px solid gray;
+`;
+
+
 const StyledTable = styled('table')`
   box-sizing: border-box;
-  width: 60%;
+  width: 100%;
   background-color: rgb(52, 51, 51);
   text-align: left;
   border-collapse: collapse;
 
-
   & th {
     font-size: 0.8rem;
-    background-color: #2f3136;
+    background-color:rgb(46, 44, 44);
     color: #e1e1e1;
+    position: sticky;
+    top: 0; /* Stick to the top */
+    
   }
 
    & th,& td {
@@ -39,7 +54,6 @@ const StyledTable = styled('table')`
   }
 
   & tr {
-    border: 0.1px solid gray;  
     cursor: pointer;
   }
   
@@ -51,6 +65,10 @@ const StyledTable = styled('table')`
     width: 2rem; /* Second column width */
   }
 
+  & tr: nth-child(even) {
+    background-color:rgb(46, 44, 44); /* Even rows */
+
+  }
   `
 
 const StyledProblemHeader = styled('h3')`
@@ -179,6 +197,7 @@ const ProblemsList = () => {
   return (
     <StyledProblemsList>
       <StyledProblemHeader>Problems List</StyledProblemHeader>
+      <StyledTableContainer>
       <StyledTable>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -215,6 +234,7 @@ const ProblemsList = () => {
           ))}
         </tbody>
       </StyledTable>
+      </StyledTableContainer>
     </StyledProblemsList>
   )
 }
