@@ -27,7 +27,7 @@ const StyledHeading = styled('h3')`
 const StyledDifficulty = styled('h3') <{ difficultyLevel: string }>`
   font-weight: 600;
   margin-top: 0rem;
-  color: ${p => p.difficultyLevel === "Hard" ? "#ff0000" : p.difficultyLevel === "Medium" ? "#FFA500" : "#00ad5f"};
+  color: ${p => p.difficultyLevel === "Hard" ? "#ef4444" : p.difficultyLevel === "Medium" ? "#facc15" : "#22c55e"};
   `
 
 const StyledSource = styled('a')`

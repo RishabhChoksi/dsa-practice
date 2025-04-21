@@ -6,76 +6,72 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { flexRender, useReactTable } from '@tanstack/react-table';
 import { getSortedRowModel, getFilteredRowModel, getCoreRowModel, ColumnDef } from '@tanstack/table-core';
+import Intro from './Intro';
 
 const StyledProblemsList = styled('section')`
+font-family: poppins;
+  box-sizing: border-box;
   margin:0;
-  background-color: #262626;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  flex: 3;
   color: #e1e1e1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items:center ;
+  width: 100%;
+  & * {
+    box-sizing: border-box;
+  }
 `;
 
 const StyledTableContainer = styled('section')`
-  width: 80%;
-  max-height: 85vh; 
-  overflow-y: auto; /* Enable vertical scrolling */
-  justify-self: center;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  margin: 0;
-  border: 1px solid gray;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  justify-content: center;
+  align-items: center;
+  width: 100%; 
 `;
-
-
-const StyledTable = styled('table')`
-  box-sizing: border-box;
-  width: 100%;
-  background-color: rgb(52, 51, 51);
-  text-align: left;
-  border-collapse: collapse;
-
-  & th {
-    font-size: 0.8rem;
-    background-color:rgb(46, 44, 44);
-    color: #e1e1e1;
-    position: sticky;
-    top: 0; /* Stick to the top */
-    
-  }
-
-   & th,& td {
-    color: #e1e1e1;
-    padding: 0.4rem 1rem;
-  }
-
-  & tr {
-    cursor: pointer;
-  }
-  
-  & th:nth-child(1), & td:nth-child(1) {
-    width: 2rem; /* First column width */
-  }
-
-  & th:nth-child(5), & td:nth-child(5) {
-    width: 2rem; /* Second column width */
-  }
-
-  & tr: nth-child(even) {
-    background-color:rgb(46, 44, 44); /* Even rows */
-
-  }
-  `
 
 const StyledProblemHeader = styled('h3')`
 font-size: 1.5rem;
 margin:0;
-padding: 1rem;
+padding: 1rem 0;
 `;
+
+
+const StyledTable = styled('table')`
+  width: 90%;
+  max-width: 100%;
+  text-align: left;
+  /* background: linear-gradient(to right,rgb(59, 59, 77),rgb(49, 23, 23)); */
+  background: linear-gradient(to right,#222222,#2f3136);
+  border-collapse: collapse;
+
+  & thead tr:first-child {
+    background: #222222;
+    position: sticky;
+    top: 0;
+  }
+
+  & td {
+   padding: 0.25rem 0.3rem;  
+  }
+
+  & th {
+    font-size: 0.8rem;
+    color: #e1e1e1;
+    position: sticky;
+    top: 0;
+    
+  }
+
+  & tr:hover {
+    font-size:900;
+    background-color:rgb(48, 48, 52);
+    cursor:pointer;
+  }
+  `
+
+
 
 const ProblemsList = () => {
   const dispatch = useDispatch();
@@ -99,14 +95,14 @@ const ProblemsList = () => {
   };
 
   const handleVisitedClick = (id: number) => {
-    if(visitedItems.includes(id))
+    if (visitedItems.includes(id))
       return;
-    const updatedVisitedItems =  [...visitedItems, id]; // Add if not visited
+    const updatedVisitedItems = [...visitedItems, id]; // Add if not visited
 
     setVisitedItems(updatedVisitedItems); // Update state
     localStorage.setItem('visited', JSON.stringify(updatedVisitedItems)); // Update localStorage
   };
-  
+
 
   const columns = useMemo<ColumnDef<IndividualProblemState>[]>(
     () => [
@@ -114,7 +110,7 @@ const ProblemsList = () => {
         accessorKey: 'problem.id',
         header: 'ID',
       },
-      
+
       {
         accessorKey: 'question.heading',
         header: 'Title',
@@ -125,9 +121,9 @@ const ProblemsList = () => {
         cell: ({ row }) => {
           const difficulty = row.original.problem.difficultyLevel;
           let color = '';
-          if (difficulty === 'Hard') color = '#ff0000'; // Red
-          else if (difficulty === 'Medium') color = '#FFA500'; // Yellow
-          else if (difficulty === 'Easy') color = '#00ad5f'; // Green
+          if (difficulty === 'Hard') color = '#ef4444'; // Red
+          else if (difficulty === 'Medium') color = '#facc15'; // Yellow
+          else if (difficulty === 'Easy') color = '#22c55e'; // Green
 
           return (
             <div
@@ -155,7 +151,7 @@ const ProblemsList = () => {
         },
       },
       {
-        accessorKey: 'problem.starred', 
+        accessorKey: 'problem.starred',
         header: 'Star',
         cell: ({ row }) => {
           const starred = starredItems.includes(row.original.problem.id) || false;
@@ -168,7 +164,7 @@ const ProblemsList = () => {
               }}
               onClick={(e) => {
                 e.stopPropagation(); // Prevent triggering the row's onClick
-                handleStarClick(row.original.problem.id); 
+                handleStarClick(row.original.problem.id);
               }}
             >
               {starred ? '★' : '☆'}
@@ -178,7 +174,7 @@ const ProblemsList = () => {
       },
     ],
     // eslint-disable-next-line
-    [problemsList,dispatch,starredItems,visitedItems] // Add starredItems and visitedItems to dependencies
+    [problemsList, dispatch, starredItems, visitedItems] // Add starredItems and visitedItems to dependencies
   );
 
   // eslint-disable-next-line
@@ -195,47 +191,50 @@ const ProblemsList = () => {
 
 
   return (
-    <StyledProblemsList>
-      <StyledProblemHeader>Problems List</StyledProblemHeader>
-      <StyledTableContainer>
-      <StyledTable>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
+    <>
+      <Intro />
+      <StyledProblemsList>
+        <StyledProblemHeader>Problems List</StyledProblemHeader>
+        <StyledTableContainer>
+          <StyledTable>
+            <thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.column.getIsSorted() === 'asc' ? ' 🔼' : header.column.getIsSorted() === 'desc' ? ' 🔽' : ''}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr
+                  key={row.id}
+                  onClick={() => {
+                    handleVisitedClick(row.original.problem.id);
+                    navigate(`/dsa-practice/problems/${row.original.problem.id}`)
+                  }}
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
-                  {header.column.getIsSorted() === 'asc' ? ' 🔼' : header.column.getIsSorted() === 'desc' ? ' 🔽' : ''}
-                </th>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr
-              key={row.id}
-              onClick={() => {
-                handleVisitedClick(row.original.problem.id);
-                navigate(`/dsa-practice/problems/${row.original.problem.id}`)
-              }}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </StyledTable>
-      </StyledTableContainer>
-    </StyledProblemsList>
+            </tbody>
+          </StyledTable>
+        </StyledTableContainer>
+      </StyledProblemsList>
+    </>
   )
 }
 

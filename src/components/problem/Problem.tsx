@@ -15,6 +15,7 @@ const StyledProblem = styled('div')`
     justify-content: start;
     padding: 0.4rem 0.5rem; 
     background-color: rgb(52, 51, 51);
+    font-family: poppins;
 
 `
 
