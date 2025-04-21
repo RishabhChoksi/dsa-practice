@@ -1199,8 +1199,142 @@
     "solution": "class Solution {\n    public int firstMissingPositive(int[] nums) {\n        /*\n        Solution 1:\n        The solution is very simple. So any result is always going to be\n        between 1 to n because if all numbers in array are greater than n,\n        then 1 is result.\n        What we do is simply place any number in its position if indexing\n        started from 1. For example, 2 should be placed in second position\n        (index 1). Similary element x will be stored in x-1 position.\n        These storing will happen using swapping, keep swapping until you\n        find the correct place.\n        */\n\n        for (int i = 0; i < nums.length; i++) {\n            int el = nums[i];\n            // These condition is important. If length is 4, and I have number,\n            // 4, it will be eventually placed at 3. But 0 can't be placed at \n            // -1. So start with 1 and end at nums.length and simply check\n            // if i is in correct position.\n            // We ignore all negatives since they can't be placed.\n            // We also ignore all numbers greater than n\n            while (el >= 1 && el <= nums.length && i != el - 1) {\n                // we break if two numbers to be swapped are same\n                // to avoid infinite loop\n                if (nums[el - 1] == nums[i]) {\n                    break;\n                }\n                swap(nums, el - 1, i);\n                el = nums[i];\n            }\n        }\n\n        for (int i = 0; i < nums.length; i++) {\n            if (nums[i] != i + 1) {\n                return i + 1;\n            }\n        }\n\n        return nums.length + 1;\n\n    }\n\n    void swap(int[] nums, int i, int j) {\n        int temp = nums[i];\n        nums[i] = nums[j];\n        nums[j] = temp;\n    }\n}"
   }
 }
-
-
+,
+{
+  "problem": {
+    "id": 26,
+    "topic": "Stack",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/valid-parentheses/description/",
+    "tags": [
+      "stack","string"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Valid Parentheses",
+    "question": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\n\nAn input string is valid if:\n\n1. Open brackets must be closed by the same type of brackets.\n\n2. Open brackets must be closed in the correct order.\n\n3. Every close bracket has a corresponding open bracket of the same type.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "s = \"()\"",
+        "output": "true",
+        "explanation": ""
+      },
+      {
+        "id": 1,
+        "input": "s = \"()[]{}\"",
+        "output": "true",
+        "explanation": ""
+      },
+      {
+        "id": 2,
+        "input": "s = \"(]\"",
+        "output": "false",
+        "explanation": ""
+      }
+      ,
+      {
+        "id": 3,
+        "input": "s = \"([])\"",
+        "output": "true",
+        "explanation": ""
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 10^4",
+      "s consists of parentheses only '()[]{}'."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public boolean isValid(String s) {\n        /*\n        Solution 1:\n        Simply add items in the stack until they are opening brackets\n        Once you see a closing bracket, peek and compare if they are\n        valid. If yes, pop it else return false\n        */\n\n        Stack<Character> stack = new Stack();\n        for (char bracket : s.toCharArray()) {\n            if (isOpening(bracket)) {\n                stack.push(bracket);\n            } else if (!stack.isEmpty() && isValid(stack.peek(), bracket)) {\n                stack.pop();\n            } else {\n                return false;\n            }\n        }\n        return stack.isEmpty();\n    }\n\n    boolean isOpening(char bracket) {\n        return bracket == '{' || bracket == '[' || bracket == '(';\n    }\n\n    boolean isValid(char prev, char curr) {\n        return (prev == '{' && curr == '}') || (prev == '[' && curr == ']') || (prev == '(' && curr == ')');\n    }\n}"
+  }
+}
+,
+{
+  "problem": {
+    "id": 27,
+    "topic": "Stack",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/min-stack/description/",
+    "tags": [
+      "stack","design"
+    ],
+    "difficultyLevel": "Medium"
+  },
+  "question": {
+    "heading": "Min Stack",
+    "question": "Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.\n\nImplement the MinStack class:\n\n1. MinStack() initializes the stack object.\n\n2. void push(int val) pushes the element val onto the stack.\n\n3. void pop() removes the element on the top of the stack.\n\n4. int top() gets the top element of the stack.\n\n5. int getMin() retrieves the minimum element in the stack.\n\nYou must implement a solution with O(1) time complexity for each function.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "[\"MinStack\",\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"top\",\"getMin\"]\n[[],[-2],[0],[-3],[],[],[],[]]",
+        "output": "[null,null,null,null,-3,null,0,-2]",
+        "explanation": "MinStack minStack = new MinStack();\nminStack.push(-2);\nminStack.push(0);\nminStack.push(-3);\nminStack.getMin(); // return -3\nminStack.pop();\nminStack.top();    // return 0\nminStack.getMin(); // return -2\n\n"
+      }
+    ],
+    "constraints": [
+      "-2^31 <= val <= 2^31 - 1",
+      "Methods pop, top and getMin operations will always be called on non-empty stacks.",
+      "At most 3 * 10^4 calls will be made to push, pop, top, and getMin."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class MinStack {\n    /*\n    Solution 1:\n    Simply maintain 2 stacks, one for maintaining min at each point\n    and other for storing vals\n    */\n\n    Stack<Integer> stack;\n    Stack<Integer> minStack;\n\n    public MinStack() {\n        stack = new Stack();\n        minStack = new Stack();\n    }\n\n    public void push(int val) {\n        if (minStack.isEmpty()) {\n            minStack.push(val);\n        } else {\n            minStack.push(Math.min(val, minStack.peek()));\n        }\n        stack.push(val);\n    }\n\n    public void pop() {\n        if (!stack.isEmpty()) {\n            minStack.pop();\n            stack.pop();\n        }\n    }\n\n    public int top() {\n        return stack.peek();\n    }\n\n    public int getMin() {\n        return minStack.peek();\n    }\n}\n\n/**\n * Your MinStack object will be instantiated and called as such:\n * MinStack obj = new MinStack();\n * obj.push(val);\n * obj.pop();\n * int param_3 = obj.top();\n * int param_4 = obj.getMin();\n */"
+  }
+}
+,
+{
+  "problem": {
+    "id": 28,
+    "topic": "Stack",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/next-greater-element-i/description/",
+    "tags": [
+      "array","hash table", "monotonic stack","stack"
+    ],
+    "difficultyLevel": "Easy"
+  },
+  "question": {
+    "heading": "Next Greater Element I",
+    "question": "The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.\n\nYou are given two distinct 0-indexed integer arrays nums1 and nums2, where nums1 is a subset of nums2.\n\nFor each 0 <= i < nums1.length, find the index j such that nums1[i] == nums2[j] and determine the next greater element of nums2[j] in nums2. If there is no next greater element, then the answer for this query is -1.\n\nReturn an array ans of length nums1.length such that ans[i] is the next greater element as described above.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "nums1 = [4,1,2], nums2 = [1,3,4,2]",
+        "output": "[-1,3,-1]",
+        "explanation": "The next greater element for each value of nums1 is as follows:\n- 4 is underlined in nums2 = [1,3,4,2]. There is no next greater element, so the answer is -1.\n- 1 is underlined in nums2 = [1,3,4,2]. The next greater element is 3.\n- 2 is underlined in nums2 = [1,3,4,2]. There is no next greater element, so the answer is -1.\n"
+      },
+      {
+        "id": 1,
+        "input": "nums1 = [2,4], nums2 = [1,2,3,4]",
+        "output": "[3,-1]",
+        "explanation": "The next greater element for each value of nums1 is as follows:\n- 2 is underlined in nums2 = [1,2,3,4]. The next greater element is 3.\n- 4 is underlined in nums2 = [1,2,3,4]. There is no next greater element, so the answer is -1.\n"
+      }
+    ],
+    "constraints": [
+      "1 <= nums1.length <= nums2.length <= 1000",
+      "0 <= nums1[i], nums2[i] <= 10^4",
+      "All integers in nums1 and nums2 are unique.",
+      "All the integers of nums1 also appear in nums2."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public int[] nextGreaterElement(int[] nums1, int[] nums2) {\n\n        /*\n        Solution 1: \n        These works only if array items are distinct since we are using \n        map. For each item in nums2, we iterate and store them in stack.\n        Everytime we compare, stack's top and current num (from num2).\n        If stack's top is lesser than current num, then that top's (and\n        all items' in stack) next greater is current num, so we store it\n        in map. Else, we keep adding num in stack. \n        Later on simply we check in map, if ans doesn't exist then\n        its -1\n        */\n\n        Stack<Integer> stack = new Stack();\n        HashMap<Integer, Integer> map = new HashMap();\n\n        for (int num : nums2) {\n            while (!stack.isEmpty() && stack.peek() < num) {\n                map.put(stack.peek(), num);\n                stack.pop();\n            }\n            stack.push(num);\n        }\n        for (int i = 0; i < nums1.length; i++) {\n            nums1[i] = map.getOrDefault(nums1[i], -1);\n        }\n        return nums1;\n    }\n}"
+  }
+}
 
 
 
