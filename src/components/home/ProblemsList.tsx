@@ -42,9 +42,9 @@ const StyledTable = styled('table')`
   width: 90%;
   max-width: 100%;
   text-align: left;
-  /* background: linear-gradient(to right,rgb(59, 59, 77),rgb(49, 23, 23)); */
   background: linear-gradient(to right,#222222,#2f3136);
   border-collapse: collapse;
+  margin-bottom: 2rem;
 
   & thead tr:first-child {
     background: #222222;

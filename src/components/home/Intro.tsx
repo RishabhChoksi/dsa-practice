@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 const StyledIntro = styled('section')`
@@ -40,20 +39,23 @@ color: #c0caf5;
 `
 
 const Intro = () => {
-  return (
-    <StyledIntro>
-       <StyledIntroText> Hi, I'm Rishabh 👋  <br/>
-I'm currently preparing for SDE interviews and built this platform to track and reflect on my DSA journey.  
-Every solution here is written with clarity, efficiency, and learning in mind.
-</StyledIntroText>
-<br/>
-<StyledIntroLinks>
-    <a href="https://github.com/RishabhChoksi/dsa-practice/" target="_blank">GitHub</a>&nbsp;•&nbsp;
-    <a href="https://www.linkedin.com/in/rishabh-c-683306ab/" target="_blank">LinkedIn</a>&nbsp;•&nbsp;
-    <a href="/resume.pdf" target="_blank">Resume</a>
-  </StyledIntroLinks>
-    </StyledIntro>
-  )
+    return (
+        <StyledIntro>
+            <StyledIntroText> Hi, I'm Rishabh 👋  <br />
+                I'm currently preparing for SDE interviews and built this platform to track and reflect on my DSA journey.
+                Every solution here is written with clarity, efficiency, and learning in mind.
+                <br />
+                <p>🚀 Open to SDE roles — feel free to reach out via LinkedIn or check out my resume below.</p>
+
+            </StyledIntroText>
+            <br />
+            <StyledIntroLinks>
+                <a href="https://github.com/RishabhChoksi/dsa-practice/" target="_blank" rel="noreferrer">GitHub</a>&nbsp;•&nbsp;
+                <a href="https://www.linkedin.com/in/rishabh-c-683306ab/" target="_blank" rel="noreferrer">LinkedIn</a>&nbsp;•&nbsp;
+                <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+            </StyledIntroLinks>
+        </StyledIntro>
+    )
 }
 
 export default Intro
