@@ -10,6 +10,14 @@ padding: 1rem;
 background-color: #262626;
 color: #e1e1e1;
 white-space: pre-wrap;
+& img {
+  max-width: 70%;
+  max-height:250px;
+  margin: 1rem 0;
+}
+& div {
+  white-space: pre-wrap;
+}
 `
 const StyledHeadingWrapper = styled('div')`
   margin-top: 0.3rem;
@@ -48,7 +56,7 @@ export interface ExampleState {
   input: string;
   output: string;
   explanation: string;
-  headingImages?: string[];
+  exampleImage?: string;
 }
 
 export interface QuestionState {

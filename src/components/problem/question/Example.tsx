@@ -25,9 +25,14 @@ font-size: 0.9rem;
 & div {
   margin: 0.5rem 0;
 }
+& img {
+  max-width: 70%;
+  max-height:250px;
+  margin-bottom: 1rem;
+}
 `
 
-const Example = ({ id, input, output, explanation }: ExampleState) => {
+const Example = ({ id, input, output, explanation,exampleImage }: ExampleState) => {
 
   const updateContent = (content: string) => {
     return content.replace(
@@ -54,7 +59,9 @@ const Example = ({ id, input, output, explanation }: ExampleState) => {
   return (
     <StyledExample>
       <StyledExampleHeading>Example {id}:</StyledExampleHeading>
+      
       <StyledExampleSection>
+      {exampleImage && <img src={exampleImage} alt=''/>}
         <div dangerouslySetInnerHTML={{ __html: updateContent(`Input: ${input}`) }}></div>
         <div dangerouslySetInnerHTML={{ __html:  updateContent(`Output: ${output}`) }}></div>
         { explanation && <div dangerouslySetInnerHTML={{ __html:  updateContent(`Explanation: ${explanation}`) }}></div>}
