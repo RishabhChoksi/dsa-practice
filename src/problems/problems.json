@@ -1381,6 +1381,53 @@
   "solution": {
     "solution": "class Solution {\n    public int[] nextGreaterElement(int[] nums1, int[] nums2) {\n\n        /*\n        Solution 1: \n        These works only if array items are distinct since we are using \n        map. For each item in nums2, we iterate and store them in stack.\n        Everytime we compare, stack's top and current num (from num2).\n        If stack's top is lesser than current num, then that top's (and\n        all items' in stack) next greater is current num, so we store it\n        in map. Else, we keep adding num in stack. \n        Later on simply we check in map, if ans doesn't exist then\n        its -1\n        */\n\n        Stack<Integer> stack = new Stack();\n        HashMap<Integer, Integer> map = new HashMap();\n\n        for (int num : nums2) {\n            while (!stack.isEmpty() && stack.peek() < num) {\n                map.put(stack.peek(), num);\n                stack.pop();\n            }\n            stack.push(num);\n        }\n        for (int i = 0; i < nums1.length; i++) {\n            nums1[i] = map.getOrDefault(nums1[i], -1);\n        }\n        return nums1;\n    }\n}"
   }
+},
+{
+  "problem": {
+    "id": 30,
+    "topic": "Stack",
+    "source": "Leetcode",
+    "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/description/",
+    "tags": [
+      "hash table","string","sliding window"
+    ],
+    "difficultyLevel": "Medium"
+  },
+  "question": {
+    "heading": "Longest Substring Without Repeating Characters",
+    "question": "Given a string s, find the length of the longest substring without duplicate characters.\n\n",
+    "headingImages": [
+       ],
+    "examples": [ 
+      {
+        "id": 0,
+        "input": "s = \"abcabcbb\"",
+        "output": "3",
+        "explanation": "The answer is \"abc\", with the length of 3."
+      },
+      {
+        "id": 1,
+        "input": "\"bbbbb\"",
+        "output": "1",
+        "explanation": "The answer is \"b\", with the length of 1."
+      },
+      {
+        "id": 1,
+        "input": "\"pwwkew\"",
+        "output": "3",
+        "explanation": "The answer is \"wke\", with the length of 3.Notice that the answer must be a substring, \"pwke\" is a subsequence and not a substring.\n\n"
+      }
+    ],
+    "constraints": [
+      "0 <= s.length <= 5 * 10^4",
+      "s consists of English letters, digits, symbols and spaces."
+    ],
+    "hints": [
+    ]
+  },
+  "solution": {
+    "solution": "class Solution {\n    public int lengthOfLongestSubstring(String s) {\n\n        /*\n        Solution 1: \n        Its very simple. Maintain 2 pointers, fp and sp.\n        Increment sp and keep adding unique elements in set\n        until you find a repeating character in set. As soon as  \n        something existing comes, remove it from set and increment.\n        At any point of time, sp - fp or max set size is the answer.\n        */\n\n        HashSet<Character> set = new HashSet();\n        int fp = 0, sp = 0, ans = 0;\n\n        while (sp < s.length() && fp <= sp) {\n            if (!set.contains(s.charAt(sp))) {\n                set.add(s.charAt(sp));\n                sp++;\n            } else {\n                set.remove(s.charAt(fp));\n                fp++;\n            }\n            // ans = Math.max(ans, set.size()); this will also work!\n            ans = Math.max(ans, sp - fp);\n        }\n        return ans;\n    }\n}"
+  }
 }
 
 
