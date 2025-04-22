@@ -1,7 +1,7 @@
 {
   "name": "dsa-practice",
   "version": "0.1.0",
-  "homepage": "https://www.dsa.work.gd",
+  "homepage": "https://dsamaster.publicvm.com",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.7.0",
