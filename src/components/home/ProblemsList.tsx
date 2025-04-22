@@ -220,7 +220,7 @@ const ProblemsList = () => {
                   key={row.id}
                   onClick={() => {
                     handleVisitedClick(row.original.problem.id);
-                    navigate(`/dsa-practice/problems/${row.original.problem.id}`)
+                    navigate(`/problems/${row.original.problem.id}`)
                   }}
                 >
                   {row.getVisibleCells().map((cell) => (

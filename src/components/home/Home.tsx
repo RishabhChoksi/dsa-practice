@@ -18,8 +18,8 @@ const Home = () => {
     <StyledHome>
       <BrowserRouter>
         <Routes>
-          <Route path="/dsa-practice" element={<ProblemsList />} />
-          <Route path="/dsa-practice/problems/:id" element={<Problem />} />
+          <Route path="/" element={<ProblemsList />} />
+          <Route path="/problems/:id" element={<Problem />} />
         </Routes>
       </BrowserRouter>
     </StyledHome>
